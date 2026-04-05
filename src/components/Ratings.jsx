@@ -1,7 +1,7 @@
 import { Star } from "lucide-react"
 import { useEffect, useState } from "react"
 
-const Reviews = ({
+const Ratings = ({
   value = 0,
   onRatingChange,
   disabled = false,
@@ -24,6 +24,7 @@ const Reviews = ({
   }
 
   return (
+    <div className="flex gap-2">
     <div className="flex gap-1">
       {[1, 2, 3, 4, 5].map((star) => {
         const filled = hover ? star <= hover : star <= rating
@@ -47,7 +48,9 @@ const Reviews = ({
         )
       })}
     </div>
+    <p className="text-sm font-medium">{rating.toFixed(0)}/5</p>
+    </div>
   )
 }
 
-export default Reviews
+export default Ratings

@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom"
-import Reviews from "./Reviews"
+import Ratings from "./Ratings"
 import { useState } from "react"
 
 const Product = ({ product }) => {
@@ -27,12 +27,12 @@ const Product = ({ product }) => {
 
       {/* Rating Section */}
       <div className="flex items-center gap-4 mt-3">
-        <Reviews
+        <Ratings
           value={rating}
           onRatingChange={(r) => setRating(r)}
         />
 
-        <p className="text-sm font-medium">{rating}/5</p>
+        
         <p className="text-gray-500 text-sm">
           {product.numOfReviews} reviews
         </p>

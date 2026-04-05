@@ -1,19 +1,24 @@
-import {
-  Menu,
-  Search,
-  ShoppingBag,
-  ShoppingCart,
-  X
-} from "lucide-react"
-
+import { Menu, Search, ShoppingBag, ShoppingCart, X} from "lucide-react"
 import { useState } from "react"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 
 const Navbar = () => {
   const [open, setOpen] = useState(false)
+  const [searchQuery,setSearchQuery]=useState("")
   const isAuthorised = false
-
+  
   const cartCount = 3
+  const navigate=useNavigate()
+
+  const handleSubmit = (e) => {
+  e.preventDefault()
+  if(searchQuery.trim()){
+    navigate(`/products?keyword=${encodeURIComponent(searchQuery)}`)
+  }else{
+    navigate('/products')
+  }
+  setSearchQuery("")
+}
 
   return (
     <header className="sticky top-0 z-50 bg-white shadow-md">
@@ -42,11 +47,13 @@ const Navbar = () => {
         <div className="flex items-center gap-4">
 
           {/* DESKTOP SEARCH */}
-          <form className="hidden md:flex items-center border rounded-md px-2">
+          <form onSubmit={handleSubmit} className="hidden md:flex items-center border rounded-md px-2">
             <input
               type="text"
+              value={searchQuery}
               placeholder="Search..."
               className="outline-none px-2 py-1"
+              onChange={(e)=>{setSearchQuery(e.target.value)}}
             />
             <button type="submit">
               <Search size={18} />
@@ -67,7 +74,7 @@ const Navbar = () => {
               Profile
             </button>
           ) : (
-            <button className="hidden md:block bg-blue-700 text-white px-4 py-2 rounded-md">
+            <button onClick={()=>{navigate('/register')}} className="hidden md:block bg-blue-700 text-white px-4 py-2 rounded-md">
               Register
             </button>
           )}
@@ -96,7 +103,10 @@ const Navbar = () => {
 
           {!isAuthorised && (
             <button
-              onClick={() => setOpen(false)}
+              onClick={() => {
+                setOpen(false)
+                navigate('/register')
+              }}
               className="bg-blue-700 text-white py-2 rounded-md"
             >
               Register
